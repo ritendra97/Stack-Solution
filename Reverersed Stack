@@ -1,0 +1,77 @@
+Reverersed Stack
+package sort;
+import java.util.Stack;
+class StackNode
+{
+	int data;
+	StackNode next;
+	StackNode(int data)
+	{
+		this.data=data;
+		this.next=null;
+	}
+}
+public class Stacksort 
+{
+	StackNode top;
+	public void push(int data)
+	{
+		if(this.top==null)
+		{
+			this.top=new StackNode(data);
+			return;	
+		}
+		StackNode new_node = new StackNode(data);
+		new_node.data=data;
+		new_node.next=this.top;
+		this.top=new_node;
+	}
+	public StackNode pop()
+	{
+		StackNode temp=this.top;
+		this.top=this.top.next;
+		return temp;
+	}
+	public void display() 
+    { 
+        StackNode s = this.top; 
+        while (s != null) { 
+            System.out.print(s.data + " "); 
+            s = s.next; 
+        } 
+        System.out.println(); 
+    }
+	public void reverse()
+	{
+		StackNode  curr,prv,next;
+		curr=this.top;
+		prv=this.top;
+		curr=curr.next;
+		prv.next=null;
+		while(curr!=null)
+		{
+			next=curr.next;
+			curr.next=prv;
+			prv=curr;
+			curr=next;
+		}
+		this.top=prv;
+	}
+	public static void main(String[] args)
+	{
+		Stacksort s = new Stacksort();
+		s.push(1); 
+        s.push(2); 
+        s.push(3); 
+        s.push(4); 
+        System.out.println("Original Stack"); 
+        s.display(); 
+  
+        // reverse 
+        s.reverse(); 
+  
+        System.out.println("Reversed Stack"); 
+        s.display();
+	}
+
+}

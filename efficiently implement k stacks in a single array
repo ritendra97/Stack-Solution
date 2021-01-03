@@ -1,0 +1,72 @@
+//efficiently implement k stacks in a single array
+import java.util.*;
+public class StackImplementation 
+{
+	static int arr[];
+	static int top[];
+	static int next[];
+	static int n=0;
+	static int k=0;
+	static int free;
+	// k1 stack in an array of n size
+	public static void KStack(int k1, int n1)  
+    { 
+		k = k1; 
+        n = n1; 
+        arr = new int[n]; 
+        top = new int[k]; 
+        next = new int[n]; 
+        for (int i = 0; i < k; i++) 
+            top[i] = -1; 
+        free = 0; 
+        for (int i = 0; i < n - 1; i++) 
+            next[i] = i + 1; 
+        next[n - 1] = -1; 
+		
+    }
+	static boolean isfull()
+	{
+		return (free==-1);
+	}
+	static boolean isempty(int sn)
+	{
+		return (top[sn]==-1);
+	}
+	// here sn indicates the no of stack
+	static void push(int item, int sn)  
+    {  
+        if (isfull())  
+        { 
+            System.out.println("Stack Overflow"); 
+            return; 
+        } 
+        int i = free;  
+        free = next[i]; 
+        next[i] = top[sn]; 
+        top[sn] = i; 
+        arr[i] = item; 
+    } 
+
+	// To pop an from stack number 'sn'
+	static int pop(int sn)  
+    { 
+        if (isempty(sn))  
+        { 
+            System.out.println("Stack Underflow"); 
+            return Integer.MAX_VALUE; 
+        } 
+       int i = top[sn]; 
+       top[sn] = next[i]; 
+       next[i] = free; 
+       free = i; 
+       return arr[i]; 
+    } 
+	public static void main(String[] args) 
+	{
+		int k1 = 3, n1 = 10; 
+		KStack(k1,n1);
+		push(20,2);
+		push(25,2);
+		System.out.println("Popped element from stack 2 is " + pop(2));
+	}
+}

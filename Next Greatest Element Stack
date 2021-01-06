@@ -1,0 +1,47 @@
+//Next Greatest Element Stack
+package stack;
+import java.util.*;
+import java.util.Collections;
+public class NextGreatest 
+{
+	 
+    public void NGE(int nums[])
+    {
+    	List<Integer> v = new ArrayList<>(); 
+    	Stack<Integer> s = new Stack<Integer>();
+    	for(int i = nums.length-1;i>=0;i--)
+    	{
+    		if(s.size()==0)
+    			v.add(-1);
+    		else if(s.size()>0 && nums[i]>=s.peek())
+    		{
+    			v.add(nums[i]);
+    		}
+    		else if(s.size()>0 && nums[i]<=s.peek())
+    		{
+    			while(s.size()==0 && nums[i]<s.peek())
+    			{
+    				s.pop();
+    			}
+    			if(s.size()==0)
+    			{
+    				v.add(-1);
+    			}
+    			else
+    			{
+    				v.add(s.pop());
+    			}
+    		}
+    		s.push(nums[i]);
+    	}
+    	Collections.reverse(v);
+    	System.out.println("The Vector is: " +v);
+    }
+	public static void main(String[] args) 
+	{
+		NextGreatest n1 = new NextGreatest();
+         int nums[]= {11, 13, 21, 3};	
+         n1.NGE(nums);
+    }
+
+}

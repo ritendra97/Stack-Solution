@@ -1,0 +1,38 @@
+// Queue using two stack
+import java.util.*;
+public class StackProblem 
+{
+	static Stack<Integer> s1 = new Stack<>();
+	static Stack<Integer> s2 = new Stack<>();
+	static int pop()
+	{
+		if(s1.isEmpty())
+			return -1;
+		int top = s1.pop();
+		return top;
+	}
+	static void push(int x)
+	{
+		while(!s1.isEmpty())
+		{
+			s2.push(s1.pop());
+		}
+		s1.push(x);
+		while(!s2.isEmpty())
+		{
+			s1.push(s2.pop());
+		}
+	}
+	public static void main(String[] args) 
+	{
+		push(1);
+		push(2);
+		push(3);
+		push(4);
+		push(5);
+		System.out.println(pop());
+		System.out.println(pop());
+		System.out.println(pop());
+		System.out.println(pop());
+	}
+}

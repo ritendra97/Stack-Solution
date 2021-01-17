@@ -1,0 +1,43 @@
+Get minimum element from stack
+class GfG
+{
+    Stack<Integer> s = new Stack<>(); 
+    Integer minEle; 
+    int getMin()
+    {
+	    if(s.isEmpty())
+    		return -1;
+    	else
+    		return minEle;
+    }
+    int pop()
+    {
+	     if(s.isEmpty())
+    		return -1;
+    	int top = s.pop();
+    	if(top<minEle)
+    	{
+    		minEle=2*minEle-top;
+    		return top;
+    	}
+    	else
+    		return top;	
+    }
+    void push(int x)
+    {
+	    if(s.isEmpty())
+    	{
+    		minEle=x;
+    		s.push(x);
+    		return;
+    	}
+    	if(x<minEle)
+    	{
+    		s.push(2*x-minEle);
+    		minEle=x;
+    	}
+    	else
+    		s.push(x);	
+    }	
+}
+

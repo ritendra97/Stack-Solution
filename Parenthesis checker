@@ -1,48 +1,75 @@
-//Parenthesis checker
+// { Driver Code Starts
 import java.util.*;
-public class StackProblem 
+import java.io.*;
+import java.lang.*;
+
+class Driverclass
 {
-	static boolean areBracketsBalanced(String expr) 
+    public static void main(String args[])
     {
-		Stack<Character> st = new Stack<>();
-		for(int i=0;i<expr.length();i++)
-		{
-			char ch = expr.charAt(i);
-			if(ch=='(' || ch=='{' ||ch=='[')
-			{
-				st.push(ch);
-				continue;
-			}
-			if(st.isEmpty())
-				return false;
-			char check;
-			switch(ch)
-			{
-			case ')':
-				check = st.pop();
-				if(ch=='{' || ch=='[')
-					return false;
-				break;
-			case '}':
-				check = st.pop();
-				if(ch=='[' || ch=='(')
-					return false;
-				break;
-			case ']':
-				check = st.pop();
-				if(ch=='{' || ch=='(')
-					return false;
-				break;
-			}
-		}
-		return (st.isEmpty());
+        Scanner sc = new Scanner(System.in);
+        
+        //Reading total number of testcases
+        int t= sc.nextInt();
+        
+        while(t-- >0)
+        {
+            //reading the string
+            String st = sc.next();
+            
+            //calling ispar method of Paranthesis class 
+            //and printing "balanced" if it returns true
+            //else printing "not balanced"
+            if(new Parenthesis().ispar(st) == true)
+                System.out.println("balanced");
+            else
+                System.out.println("not balanced");
+        
+        }
     }
-	public static void main(String[] args) 
-	{
-		String expr = "([{}])"; 
-        if (areBracketsBalanced(expr)) 
-            System.out.println("Balanced "); 
-        else
-            System.out.println("Not Balanced ");
-	}
+}// } Driver Code Ends
+
+
+class Parenthesis
+{
+    // Function to return if the paranthesis are balanced or not
+    static boolean ispar(String x)
+    {
+         Deque<Character> stack 
+         = new ArrayDeque<Character>(); 
+     for (int i = 0; i < x.length(); i++)  
+     { 
+         char ch = x.charAt(i); 
+
+         if (ch == '(' || ch == '[' || ch == '{')  
+         { 
+             // Push the element in the stack 
+             stack.push(ch); 
+             continue; 
+         } 
+         if (stack.isEmpty()) 
+             return false; 
+         char check; 
+         switch (ch) { 
+         case ')': 
+             check = stack.pop(); 
+             if (check == '{' || check == '[') 
+                 return false; 
+             break; 
+
+         case '}': 
+             check = stack.pop(); 
+             if (check == '(' || check == '[') 
+                 return false; 
+             break; 
+
+         case ']': 
+             check = stack.pop(); 
+             if (check == '(' || check == '{') 
+                 return false; 
+             break; 
+         } 
+     } 
+     return (stack.isEmpty());
+    }
 }

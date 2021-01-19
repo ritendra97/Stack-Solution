@@ -1,0 +1,46 @@
+//Sort stack using recursion
+import java.util.*;
+public class StackProblem 
+{
+	static void sort(Stack<Integer> s)
+	{
+		if(s.size()==0)
+			return;
+		//Hypothesis
+		int temp = s.pop();
+		sort(s);
+		//induction
+		insert(s,temp);
+	}
+	static void insert(Stack<Integer> s,int temp)
+	{
+		if(s.size()==0 || s.peek()<=temp)
+		{
+			s.push(temp);
+			return;
+		}
+		int check = s.pop();
+		insert(s,temp);
+		s.push(check);
+		return;
+	}
+	static void print(Stack<Integer> s)
+	{
+		while(!s.isEmpty())
+		{
+			int n = s.pop();
+			System.out.println(n);
+		}
+	}
+	public static void main(String[] args) 
+	{
+		Stack<Integer> s = new Stack<Integer>();
+		s.push(0);
+		s.push(1);
+		s.push(2);
+		s.push(5);
+		s.push(7);
+		sort(s);
+		print(s);
+	}
+}

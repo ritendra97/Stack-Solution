@@ -1,0 +1,45 @@
+//First non-repeating character in a stream.
+import java.util.*;
+public class QueueProblem 
+{
+	public static  String FirstNonRepeating(String A)
+    {
+		String result ="";
+		HashMap<Character,Integer> map = new HashMap<>();
+		Queue<Character> q = new LinkedList<>();
+		for(int i=0;i<A.length();i++)
+		{
+			if(map.containsKey(A.charAt(i)))
+			{
+				map.put(A.charAt(i), map.get(A.charAt(i))+1);
+			}
+			else
+			{
+				map.put(A.charAt(i),1);
+			}
+			if(map.get(A.charAt(i))==1)
+			{
+				q.add(A.charAt(i));
+			}
+			while(!q.isEmpty())
+			{
+				char ch = A.charAt(i);
+				if(map.get(ch)==1)
+					break;
+				else
+					q.remove();
+			}
+			if(q.isEmpty())
+				result+=-1;
+			else
+				result+=q.peek();
+		}	
+		return result;
+    }
+	public static void main(String[] args) 
+	{
+		 String A = "aabc";
+		 System.out.println(FirstNonRepeating(A));
+	}
+
+}

@@ -1,0 +1,34 @@
+//Find the nearest smaller numbers on left side in an array
+import java.util.*;
+public class StackProblem 
+{
+	static ArrayList<Integer> NSL(int arr[])
+	{
+		ArrayList<Integer> ans = new ArrayList<>(); 
+		Stack<Integer> st = new Stack<Integer>();
+		ans.add(arr[0]);
+		st.push(arr[0]);
+		for(int i=1;i<arr.length;i++)
+		{
+			while(!st.isEmpty() && st.peek()>=arr[i])
+			{
+				st.pop();
+			}
+			if(st.isEmpty())
+			{
+				ans.add(-1);
+			}
+			else
+			{
+				ans.add(st.peek());
+			}
+			st.push(arr[i]);
+		}
+		return ans;
+	}
+	public static void main(String[] args) 
+	{
+		int arr[]= {1, 6, 4, 10, 2, 5};
+		System.out.println(NSL(arr));
+	}
+}

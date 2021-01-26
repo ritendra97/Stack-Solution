@@ -1,0 +1,36 @@
+//Find the nearest smaller numbers on Right side in an array
+import java.util.*;
+public class StackProblem 
+{
+	static ArrayList<Integer> NSR(int arr[])
+	{
+		ArrayList<Integer> ans = new ArrayList<>(); 
+		Stack<Integer> st = new Stack<Integer>();
+		ans.add(arr.length-1);
+		st.push(arr.length-1);
+		for(int i=arr.length-2;i>=0;i--)
+		{
+			while(!st.isEmpty() && arr[st.peek()]>=arr[i])
+			{
+				st.pop();
+			}
+			if(st.isEmpty())
+			{
+				ans.add(-1);
+			}
+			else
+			{
+				ans.add(st.peek());
+			}
+			st.push(i);
+		}
+		Collections.reverse(ans);
+		return ans;
+	} 
+	public static void main(String[] args) 
+	{
+		int arr[]= {4,5,2,10,8};
+		System.out.println(NSR(arr));
+	}
+
+}

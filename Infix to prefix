@@ -1,0 +1,113 @@
+// first reverse
+than get postfix
+than reverse
+import java.util.*;
+
+public class StackProblem 
+{
+	public static int pre(char ch)
+	{
+		switch(ch)
+		{
+	    	case '+':
+		    case '-':
+		    	return 1;
+		    	
+		    case '*':
+		    case '/':
+		    	return 2;
+		    	
+		    case'^':
+		    	return 3;
+		}
+		return -1;
+	}
+	public static String reverse(String str)
+	{
+		char ch[] = str.toCharArray();
+		int i=0;
+		int j=ch.length-1;
+		while(i<=j)
+		{
+			 char temp = ch[i];
+			 ch[i]=ch[j];
+			 ch[j]=temp;
+			 i++;
+			 j--;
+		}
+		String res = String.valueOf(ch);
+		return res;
+	}
+	public static String infixToPostfix(char[] exp)
+	{
+		Stack<Character> st = new Stack<Character>();
+		String result = "";
+		
+		for(int i=0;i<exp.length;i++)
+		{
+			char ch = exp[i];
+			
+			if(Character.isLetterOrDigit(ch))
+				result+=ch;
+			else if(ch=='(')
+			{
+				st.push(ch);
+			}
+			else if(ch==')')
+			{
+				while(!st.isEmpty() && st.peek()!='(')
+				{
+					result+=st.pop();	
+				}
+				st.pop();
+			}
+			else
+			{
+				while(!st.isEmpty() &&  pre(ch)<=pre(st.peek()))
+				{	
+					result+=st.peek();
+					st.pop();
+				}
+				st.push(ch);
+			}	
+		}
+		while(!st.isEmpty())
+		{
+			if(st.peek() == '(')
+               return "Invalid Expression";
+            result += st.pop();
+		}
+		return result ;
+	}
+	public static String infixTOprefix(String exp)
+	{
+		String temp = reverse(exp);
+		
+		char character[] = temp.toCharArray();
+		
+		for(int i=0;i<character.length;i++)
+		{
+			if(character[i]=='(')
+			{
+				character[i]=')';
+				i++;
+			}
+			else if(character[i]==')')
+			{
+				character[i]='(';
+				i++;
+			}
+		}
+		
+		String prefix = infixToPostfix(character);
+		
+		prefix = reverse(prefix);
+		
+		return prefix;
+	}
+	public static void main(String[] args) 
+	{
+        String exp = "x+y*z/w+u";
+        System.out.println(infixTOprefix(exp));
+	}
+}

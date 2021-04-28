@@ -1,0 +1,65 @@
+//Decoded String at Index
+// this below solution memory limit exceed wala h
+class Solution {
+    public String decodeAtIndex(String S, int K) {
+        
+        String finalans = "";
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<S.length();i++){
+            
+            char c = S.charAt(i);
+            if(Character.isDigit(c)){
+                int d = c-'0';
+                while((d-1)>0){
+                    sb.append;
+                    d--;
+                }
+            }else{
+                finalans+=c;
+            }
+        }
+        String a="";
+        for(int i=0;i<finalans.length();i++){
+            if(i==K-1){
+                a+=finalans.charAt(i);
+                break;
+            }
+        }
+        return a;
+    }
+}
+
+// this is best solution
+class Solution {
+    public String decodeAtIndex(String S, int K) {
+   
+        long size =0;// yha m long isliye liya because string ki length bahut badi ho rhi thi ito bo overflow ho                        //gya int pr
+        
+        for(int i=0;i<S.length();i++){
+            
+            char ch = S.charAt(i);
+            if(Character.isDigit(ch)){
+                size = size*Integer.parseInt(""+ch);
+            }else
+                size++;
+        }
+        
+        for(int i=S.length()-1;i>=0;i--){
+            
+            char ch = S.charAt(i);
+            
+            K%=size;// yha pr bhi m likh skta tha k=k%size but overflow na isliyr ye rkha
+            
+            if(K==0 && Character.isDigit(ch)==false){
+                
+                return ""+ch;
+            }
+            
+             if(Character.isDigit(ch)){
+                size = size/Integer.parseInt(""+ch);
+            }else
+                size--;
+        }
+        return "";
+    }
+}

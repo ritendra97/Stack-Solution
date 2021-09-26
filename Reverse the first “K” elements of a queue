@@ -1,0 +1,51 @@
+//Reverse the first “K” elements of a queue
+import java.util.*;
+
+public class StackPractice {
+	
+	public static void modifyQueue(Queue<Integer> q, int k) {
+		
+		if (q.isEmpty() == true || q.size() < k)
+			return;
+
+		if (k < 0)
+			return;
+		
+		Stack<Integer> s = new Stack<Integer>();
+		for (int i = 0; i < k; i++) {
+			s.push(q.peek());
+			q.remove();
+		}
+		
+		while (!s.isEmpty()) {
+			q.add(s.peek());
+			s.pop();
+		}
+		
+		for (int i = 0; i < q.size() - k; i++) {
+			q.add(q.peek());
+			q.remove();
+		}
+	}
+
+	public static void print(Queue<Integer> q) {
+		while (!q.isEmpty()) {
+			int n = q.remove();
+			System.out.print(n + " ");
+		}
+	}
+
+	public static void main(String[] args) {
+		
+	    Queue<Integer> q = new LinkedList<Integer>();
+		q.add(1);
+		q.add(2);
+		q.add(3);
+		q.add(4);
+		q.add(5);
+		int k = 2;
+		modifyQueue(q, k);
+		print(q);
+		
+	}
+}

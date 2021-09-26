@@ -1,0 +1,95 @@
+//Distance of nearest cell having 1 in a binary matrix
+import java.util.Queue;
+import java.util.LinkedList;
+
+class cell {
+	int x;
+	int y;
+
+	public cell(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+}
+
+public class StackPractice {
+
+	public static boolean isSafe(int mat[][], int r, int c) {
+
+		if (r >= 0 && c >= 0 && r < mat.length && c < mat[0].length)
+			return true;
+		return false;
+	}
+
+	public static void nearestDistance(int mat[][]) {
+
+		Queue<cell> q = new LinkedList<>();
+		for (int i = 0; i < mat.length; i++) {
+			for (int j = 0; j < mat[0].length; j++) {
+				if (mat[i][j] == 1)
+					q.add(new cell(i, j));
+			}
+		}
+
+		int dp[][] = new int[mat.length][mat[0].length];
+
+		for (int i = 0; i < mat.length; i++) {
+			for (int j = 0; j < mat[0].length; j++) {
+				if (mat[i][j] == 1) {
+					dp[i][j] = 0;
+				} else {
+					dp[i][j] = Integer.MAX_VALUE;
+				}
+			}
+		}
+
+		while (!q.isEmpty()) {
+			cell temp = q.remove();
+
+			if (isSafe(mat, temp.x + 1, temp.y)) {
+				if (dp[temp.x + 1][temp.y] == Integer.MAX_VALUE) {
+					dp[temp.x + 1][temp.y] = dp[temp.x][temp.y] + 1;
+					q.add(new cell(temp.x + 1, temp.y));
+				}
+
+			}
+			if (isSafe(mat, temp.x - 1, temp.y)) {
+				if (dp[temp.x - 1][temp.y] == Integer.MAX_VALUE) {
+					dp[temp.x - 1][temp.y] = dp[temp.x][temp.y] + 1;
+					q.add(new cell(temp.x - 1, temp.y));
+				}
+
+			}
+			if (isSafe(mat, temp.x, temp.y + 1)) {
+				if (dp[temp.x][temp.y + 1] == Integer.MAX_VALUE) {
+					dp[temp.x - 1][temp.y] = dp[temp.x][temp.y] + 1;
+					q.add(new cell(temp.x, temp.y + 1));
+				}
+
+			}
+			if (isSafe(mat, temp.x, temp.y - 1)) {
+				if (dp[temp.x][temp.y - 1] == Integer.MAX_VALUE) {
+					dp[temp.x][temp.y - 1] = dp[temp.x][temp.y] + 1;
+					q.add(new cell(temp.x, temp.y - 1));
+				}
+
+			}
+		}
+		print(dp);
+	}
+	
+	public static void print(int mat[][]) {
+		for(int i=0;i<mat.length;i++) {
+			for(int j = 0;j<mat[0].length;j++) {
+				System.out.print(mat[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+	public static void main(String[] args) {
+
+		int N = 3, M = 4;
+		int mat[][] = { { 0, 0, 0, 1 }, { 0, 0, 1, 1 }, { 0, 1, 1, 0 } };
+		nearestDistance(mat);
+	}
+}

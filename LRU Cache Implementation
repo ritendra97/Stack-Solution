@@ -1,0 +1,62 @@
+//LRU Cache Implementation
+
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet; 
+import java.util.Iterator;
+import java.util.LinkedList;
+class cacheKey
+{
+	int key;
+	int value;
+	cacheKey(int key,int value)
+	{
+		this.key=key;
+		this.value=value;
+	}
+}
+public class LRUImplementation 
+{	
+	static Deque<cacheKey> dq = new LinkedList<>();
+	static HashMap<Integer,cacheKey> hs = new HashMap<>();
+	static int cachesize=3;
+	static int getFromcache(int key)
+	{
+		if(hs.containsKey(key))
+		{
+			cacheKey entry = hs.get(key);
+			dq.remove(entry);
+			dq.addFirst(entry);
+			return entry.value;
+		}
+		return -1;
+	}
+	static void putentryintoCache(int key,int value)
+	{
+		if(hs.containsKey(key))
+		{
+			cacheKey entry = hs.get(key);
+			hs.remove(entry);
+			dq.remove(entry);
+		}
+		else
+		{
+			if(dq.size()==cachesize)
+			{
+				cacheKey entrytoberemoved = dq.removeLast();
+				hs.remove(entrytoberemoved);
+			}
+		}
+		cacheKey newEntry = new cacheKey(key,value);
+		hs.put(key,newEntry);
+		dq.addFirst(newEntry);
+	}
+   public static void main(String[] args) 
+   {
+	 putentryintoCache(1,100);
+   	 putentryintoCache(2,200);
+   	 putentryintoCache(3,300);
+   	 putentryintoCache(4,400);
+   	 System.out.print(getFromcache(2));
+   }
+}

@@ -1,0 +1,58 @@
+//Remove Brackets From An Algebraic String Containing + And – Operators
+import java.util.Stack;
+
+public class Main2{
+
+    public static String simplify(String str ){
+
+        char res[] = new char[str.length()];
+        int index = 0;
+        Stack<Integer> st = new Stack<>();
+        st.push(0);
+
+        for(int i = 0;i<str.length();i++){
+
+            if(str.charAt(i)=='(' && i==0){
+                i++;
+                continue;
+            }
+
+            if(str.charAt(i)=='+'){
+
+                if(st.peek()==0) res[index++]='+';
+                if(st.peek()==1) res[index++]='-';
+
+            } else if(str.charAt(i)=='-'){
+
+                if (st.peek() == 1)
+                    res[index++] = '+';
+                else if (st.peek() == 0)
+                    res[index++] = '-';
+
+            } else if (str.charAt(i) == '(' && i > 0) {
+
+                if (str.charAt(i - 1) == '-') {
+                    int x = (st.peek() == 1) ? 0 : 1;
+                    st.push(x);
+                }
+                else if (str.charAt(i - 1) == '+')
+                    st.push(st.peek());
+
+            }
+            else if (str.charAt(i) == ')')
+                st.pop();
+            else if(str.charAt(i) == '(' && i == 0)
+                i = 0;
+            else
+                res[index++] = str.charAt(i);
+            i++;
+        }
+        return new String(res);
+    }
+    public static void main(String[] args) {
+        String s1 = "(a-(b+c)+d)";
+        String s2 = "a-(b-c-(d+e))-f";
+        System.out.println(simplify(s1));
+        System.out.println(simplify(s2));
+    }
+}

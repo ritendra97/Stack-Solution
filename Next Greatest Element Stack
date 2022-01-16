@@ -68,3 +68,30 @@ class solve{
         return ans;
     } 
 }
+
+import java.util.Arrays;
+
+public class Main4 {
+
+    public static void Solution(int arr[]){
+
+        int n = arr.length;
+        int ans[] = new int[n];
+        int min=n-1;
+        for(int i = n-2;i>=0;i--){
+            if(arr[i]>arr[min]){
+                ans[i] = -1;
+                min  = i;
+            }else{
+                ans[i] = arr[min];
+            }
+        }
+
+        Arrays.stream(ans).forEach(System.out::println);
+    }
+
+    public static void main(String [] args){
+        int arr[] = {4, 3, 6, 2, -1, 4, -5, 3, 2};
+        Solution(arr);
+    }
+}

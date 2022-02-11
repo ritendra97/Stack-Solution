@@ -1,0 +1,115 @@
+//Evaluation of Prefix Expressions
+-- When Number is less than 10
+// Java program to evaluate
+import java.io.*;
+import java.util.*;
+
+class GFG {
+
+	static Boolean isOperand(char c)
+	{
+		if (c >= 48 && c <= 57)
+			return true;
+		else
+			return false;
+	}
+
+	static double evaluatePrefix(String exprsn)
+	{
+		Stack<Double> Stack = new Stack<Double>();
+
+		for (int j = exprsn.length() - 1; j >= 0; j--) {
+
+			if (isOperand(exprsn.charAt(j)))
+				Stack.push((double)(exprsn.charAt(j) - 48));
+
+			else {
+				Stack.pop();
+				double o2 = Stack.peek();
+				Stack.pop();
+
+				switch (exprsn.charAt(j)) {
+				case '+':
+					Stack.push(o1 + o2);
+					break;
+				case '-':
+					Stack.push(o1 - o2);
+					break;
+				case '*':
+					Stack.push(o1 * o2);
+					break;
+				case '/':
+					Stack.push(o1 / o2);
+					break;
+				}
+			}
+		}
+
+		return Stack.peek();
+	}
+	public static void main(String[] args)
+	{
+		String exprsn = "+9*26";
+		System.out.println(evaluatePrefix(exprsn));
+	}
+}
+
+
+-- When some numbers are more than 10
+import java.util.Stack;
+// Evaluation of postfix expression
+
+public class Main4 {
+
+    public static int evaluatePostFix(String S){
+
+        Stack<Integer> st = new Stack<Integer>();
+
+        for(int i=S.length()-1;i>=0;i--)
+        {
+            char ch = S.charAt(i);
+            if(ch==' ') continue;
+
+            if(Character.isDigit(ch)){
+                int num = 0,j=i;
+                while (i<S.length() && Character.isDigit(S.charAt(i))){
+                    i--;
+                }
+                i++;
+                for(int k = i;k<=j;k++){
+                    num = num*10+(int)(S.charAt(k)-'0');
+                }
+                st.push(num);
+            }
+            else{
+
+                int val1 = st.pop();
+                int val2 = st.pop();
+
+                switch(ch)
+                {
+                    case '+':
+                        st.push(val2+val1);
+                        break;
+
+                    case '*':
+                        st.push(val2*val1);
+                        break;
+
+                    case '-':
+                        st.push(val2-val1);
+                        break;
+
+                    case '/':
+                        st.push(val2/val1);
+                        break;
+                }
+            }
+        }
+        return st.pop();
+    }
+    public static void main(String[] args){
+        String str = "+ 9 * 12 6";
+        System.out.println(evaluatePostFix(str));
+    }
+}

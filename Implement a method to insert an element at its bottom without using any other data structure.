@@ -1,26 +1,26 @@
 import java.util.Stack;
-// Evaluation of postfix expression
 
 public class Main4 {
 
-    static Stack<Integer> st = new Stack<>();
-    public static void push_Element(int x){
-
+    public static void Solution(Stack<Integer> st, int val){
         if(st.isEmpty()){
+            st.push(val);
             return;
         }
+
         int temp = st.pop();
-        push_Element(temp);
-        st.push(x);
+        Solution(st,val);
+        st.push(temp);
     }
 
-    public static void main(String [] args){
+    public static void main(String[] args){
+        Stack<Integer> st = new Stack<>();
         st.push(5);
         st.push(4);
         st.push(3);
         st.push(2);
         st.push(1);
-        push_Element(7);
+        Solution(st,7);
         while (!st.isEmpty()){
             System.out.println(st.pop());
         }
